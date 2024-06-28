@@ -11,13 +11,29 @@ cursor = con.cursor()
 #
 # cursor.execute("""CREATE TABLE hint
 #                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-#                 description TEXT,
-#                 suspected_id INTEGER,
-#                 FOREIGN KEY (suspected_id) REFERENCES suspected(id))
+#                 description TEXT
 #             """)
 
-# suspected_people = [("Леди Сотби",), ("Джеймс Реддингтон",), ("Роуз Реддингтон",), ("Реджинальда Вебстер",), ("Владелец",), ("Теодор Рив",)]
-# cursor.executemany("INSERT INTO suspected (name) VALUES (?)", suspected_people)
+
+def show_hint_by_id(hint_id):
+    cursor.execute("SELECT description FROM hint WHERE id = ?", (hint_id,))
+    result = cursor.fetchone()
+    return result
+
+def show_suspected_by_id(suspected_id):
+    cursor.execute("SELECT name FROM suspected WHERE id = ?", (suspected_id,))
+    result = cursor.fetchone()
+    return result
+
+hint_id = 1
+hint_description = show_hint_by_id(hint_id)
+print(hint_description)
+
+suspected_id = 1
+suspected = show_suspected_by_id(suspected_id)
+print(suspected)
 
 con.commit()
+
+
 
