@@ -6,7 +6,8 @@ from handlers import basic
 
 async def set_commands(bot: Bot):
     commands = [
-        BotCommand(command="/start", description="Начать диалог")
+        BotCommand(command="/start", description="Начать диалог"),
+        # BotCommand(command="/hint", description="Выберите посказку")
     ]
     await bot.set_my_commands(commands)
 
