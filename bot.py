@@ -1,13 +1,15 @@
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
+from aiogram.filters import Command
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram import F
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.client.bot import DefaultBotProperties
+from aiogram.types import BotCommand
 
 from config import API_TOKEN
-from handlers.finish_handler import register_finish_handlers
-from handlers.start_handler import register_start_handlers
+from handlers.finish_handler import register_finish_handlers, finish_command
+from handlers.start_handler import register_start_handlers, start_command
 from handlers.callback_handler import register_callback_handlers
 from handlers.hint_handler import register_hint_handlers
 
