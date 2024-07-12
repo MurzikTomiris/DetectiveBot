@@ -30,7 +30,7 @@ async def start_command(message: types.Message):
         type="inline", row_width=BUTTONS_PER_ROW, inline_keyboard=[*buttons]
     )
 
-    await message.reply(f"{history} \nВыберите подсказку:", reply_markup=keyboard)
+    await message.reply(f"{history} \n\n\nВыберите 10 подсказок:", reply_markup=keyboard)
 
 
 def register_start_handlers(dp: Dispatcher):
