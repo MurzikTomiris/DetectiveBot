@@ -25,15 +25,8 @@ def show_suspected_by_id(suspected_id):
     result = cursor.fetchone()
     return result
 
-hint_id = 1
-hint_description = show_hint_by_id(hint_id)
-print(hint_description)
 
-suspected_id = 1
-suspected = show_suspected_by_id(suspected_id)
-print(suspected)
+
 
 con.commit()
-
-
 

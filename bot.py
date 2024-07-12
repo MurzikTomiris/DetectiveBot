@@ -1,28 +1,28 @@
-import asyncio
 from aiogram import Bot, Dispatcher
-from aiogram.types import BotCommand
-from config import BOT_TOKEN
-from handlers import basic
+from aiogram.enums import ParseMode
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram import F
+from aiogram.client.session.aiohttp import AiohttpSession
+from aiogram.client.bot import DefaultBotProperties
 
-async def set_commands(bot: Bot):
-    commands = [
-        BotCommand(command="/start", description="Начать диалог"),
-        # BotCommand(command="/hint", description="Выберите посказку")
-    ]
-    await bot.set_my_commands(commands)
+from config import API_TOKEN
+from handlers.finish_handler import register_finish_handlers
+from handlers.start_handler import register_start_handlers
+from handlers.callback_handler import register_callback_handlers
+from handlers.hint_handler import register_hint_handlers
 
-async def main():
-    bot = Bot(token=BOT_TOKEN)
-    dp = Dispatcher()
+# Инициализация бота с параметрами по умолчанию
+session = AiohttpSession()
+bot = Bot(token=API_TOKEN, session=session, 
+          default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+storage = MemoryStorage()
+dp = Dispatcher(storage=storage)
 
-    dp.include_router(basic.router)
+# Регистрация хендлеров
+register_start_handlers(dp)
+register_callback_handlers(dp)
+register_hint_handlers(dp)
+register_finish_handlers(dp)  # Здесь регистрируем hint_handlers
 
-    await set_commands(bot)
-
-    try:
-        await dp.start_polling(bot)
-    finally:
-        await bot.close()
-
-if __name__ == "__main__":
-    asyncio.run(main())
+if __name__ == '__main__':
+    dp.run_polling(bot, skip_updates=True)
